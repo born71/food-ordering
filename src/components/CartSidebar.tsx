@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { showConfirm, showSuccess } from "../utils/alert";
 
 type CartItem = {
   name: string;
@@ -14,6 +15,13 @@ type CartSidebarProps = {
 
 export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps) {
   const total = items.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const handleOrder = async () => {
+  const confirm = await showConfirm("ต้องการยืนยันการสั่งอาหารหรือไม่?");
+  if (confirm) {
+    showSuccess("สั่งอาหารสำเร็จ! กรุณารอรับอาหารได้เลย 🍽️");
+  }
+};
 
   return (
     <>
@@ -40,7 +48,7 @@ export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps
         </div>
 
         {/* รายการอาหาร */}
-        <div className="px-4 space-y-3 overflow-y-auto h-[calc(100%-140px)]">
+        <div className="px-4 space-y-3 overflow-y-auto h-[calc(100%-200px)]">
           {items.length === 0 ? (
             <p className="text-gray-500 text-center mt-10">
               ยังไม่มีรายการอาหาร
@@ -70,15 +78,15 @@ export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps
           </div>
           <button
             disabled={items.length === 0}
+            onClick={handleOrder}
             className={`w-full py-2.5 rounded-lg font-medium text-white transition ${
-              items.length === 0
+                items.length === 0
                 ? "bg-gray-300 cursor-not-allowed"
                 : "bg-orange-500 hover:bg-orange-600"
             }`}
-            onClick={() => alert("ทำการสั่งอาหารเรียบร้อย!")}
-          >
-            สั่งอาหาร
-          </button>
+            >
+                สั่งอาหาร
+            </button>
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
+import { showAddToCartToast } from "../utils/alert"
 
 type MenuItem = {
   name: string;
@@ -78,7 +79,10 @@ export default function MenuListPage() {
                 <h3 className="font-semibold text-gray-700">{item.name}</h3>
                 <p className="text-sm text-gray-500">{item.price} บาท</p>
               </div>
-              <button className="bg-orange-500 text-white rounded-lg px-4 py-2 hover:bg-orange-600">
+              <button
+                onClick={() => showAddToCartToast(`เพิ่ม ${item.name} เข้าตะกร้าแล้ว!`)}
+                className="bg-orange-500 text-white rounded-lg px-4 py-2 hover:bg-orange-600"
+              >
                 เพิ่ม
               </button>
             </div>
