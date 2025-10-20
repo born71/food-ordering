@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import SampleFood from "../assets/img/tempfood.jpg"
+import PageWrapper from "../components/PageWrapper";
 
 const categories = [
   {
@@ -23,11 +24,8 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-        🍽️ เลือกหมวดหมู่อาหาร
-      </h1>
-
+    <PageWrapper>
+    <div className="h-[100dvh] max-w-6xl mx-auto px-8 py-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {categories.map((cat) => (
           <div
@@ -38,7 +36,7 @@ export default function HomePage() {
             <img
               src={cat.image}
               alt={cat.name}
-              className="w-full h-48 object-cover"
+              className="w-full h-36 object-cover"
             />
             <div className="p-4 text-center">
               <h2 className="text-lg font-semibold text-gray-700">
@@ -49,5 +47,6 @@ export default function HomePage() {
         ))}
       </div>
     </div>
+    </PageWrapper>
   );
 }

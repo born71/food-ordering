@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import PageWrapper from "../components/PageWrapper";
 
 type MenuItem = {
   name: string;
@@ -42,7 +43,8 @@ export default function MenuListPage() {
       : "ของหวาน";
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <PageWrapper>
+    <div className="h-[100dvh] max-w-3xl mx-auto px-4 py-8">
       <button
         onClick={() => navigate(-1)}
         className="mb-6 flex items-center text-gray-600 hover:text-orange-500 transition"
@@ -84,5 +86,6 @@ export default function MenuListPage() {
         </div>
       )}
     </div>
+    </PageWrapper>
   );
 }

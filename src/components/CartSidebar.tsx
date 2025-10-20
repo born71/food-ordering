@@ -27,7 +27,7 @@ export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps
 
       {/* 🧺 Sidebar ตะกร้า */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-[100dvh] w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -40,7 +40,7 @@ export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps
         </div>
 
         {/* รายการอาหาร */}
-        <div className="p-4 space-y-3 overflow-y-auto h-[calc(100%-140px)]">
+        <div className="px-4 space-y-3 overflow-y-auto h-[calc(100%-140px)]">
           {items.length === 0 ? (
             <p className="text-gray-500 text-center mt-10">
               ยังไม่มีรายการอาหาร
@@ -63,7 +63,7 @@ export default function CartSidebar({ isOpen, onClose, items }: CartSidebarProps
         </div>
 
         {/* ปุ่มสั่งอาหาร */}
-        <div className="p-4 border-t">
+        <div className="px-4 border-t">
           <div className="flex justify-between mb-3">
             <span className="text-gray-600">รวมทั้งหมด</span>
             <span className="font-semibold">{total} ฿</span>
