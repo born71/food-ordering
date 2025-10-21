@@ -12,7 +12,7 @@ export default function PageWrapper({ children }: PageWrapperProps) {
         animate={{ opacity: 1, x: 0 }}
         exit={{ opacity: 0, x: -60 }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="h-screen overflow-y-auto"  // 👈 fixed height + scrollable content
+        className="h-auto overflow-y-auto"  // 👈 fixed height + scrollable content
         >
         {children}
     </motion.div>

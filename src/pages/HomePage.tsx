@@ -25,8 +25,8 @@ export default function HomePage() {
 
   return (
     <PageWrapper>
-    <div className="h-[100dvh] max-w-6xl mx-auto px-8 py-8">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="h-[100dvh] max-w-4xl mx-auto px-8 py-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2  gap-6">
         {categories.map((cat) => (
           <div
             key={cat.key}

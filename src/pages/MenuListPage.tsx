@@ -45,7 +45,7 @@ export default function MenuListPage() {
 
   return (
     <PageWrapper>
-    <div className="h-[100dvh] max-w-3xl mx-auto px-4 py-8">
+    <div className="h-auto max-w-6xl mx-auto px-8 py-8">
       <button
         onClick={() => navigate(-1)}
         className="mb-6 flex items-center text-gray-600 hover:text-orange-500 transition"
@@ -73,7 +73,7 @@ export default function MenuListPage() {
           {menus.map((item, i) => (
             <div
               key={i}
-              className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center hover:shadow-md transition"
+              className="bg-white rounded-lg shadow-sm p-4 flex w-svw justify-between items-center hover:shadow-md transition"
             >
               <div>
                 <h3 className="font-semibold text-gray-700">{item.name}</h3>
