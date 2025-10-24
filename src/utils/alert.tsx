@@ -7,7 +7,7 @@ export const MySwal = withReactContent(Swal);
 export const showSuccess = (message: string) => {
   MySwal.fire({
     icon: "success",
-    title: "สำเร็จ!",
+    title: "สำเร็จ",
     text: message,
     confirmButtonColor: "#f97316", // Tailwind orange-500
   });
@@ -16,7 +16,7 @@ export const showSuccess = (message: string) => {
 export const showError = (message: string) => {
   MySwal.fire({
     icon: "error",
-    title: "เกิดข้อผิดพลาด!",
+    title: "เกิดข้อผิดพลาด",
     text: message,
     confirmButtonColor: "#ef4444", // red-500
   });
