@@ -1,6 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
-import { showAddToCartToast } from "../utils/alert"
+import { showAddToCartToast } from "../utils/alert";
+import { useCart } from "../context/CartContext";
+import FloatingCartButton from "../components/FloatingCartButton";
+import CartSidebar from "../components/CartSidebar";
+import { useState } from "react";
 
 type MenuItem = {
   name: string;
@@ -27,14 +31,15 @@ const menuData: Record<CategoryKey, MenuItem[]> = {
 };
 
 export default function MenuListPage() {
-  // 👇 ระบุ type ของ params ให้ชัดเจน
   const { category } = useParams<{ category?: string }>();
-
-  // ตรวจสอบและแปลง category ให้เป็น CategoryKey ที่รองรับ
   const catKey = (category as CategoryKey) || "food";
   const navigate = useNavigate();
+  const menus = menuData[catKey] || [];
 
-  const menus: MenuItem[] = menuData[catKey] || [];
+  const { addToCart, cart } = useCart();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const totalCount = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   const categoryName =
     catKey === "food"
@@ -45,51 +50,72 @@ export default function MenuListPage() {
 
   return (
     <PageWrapper>
-    <div className="h-auto max-w-6xl mx-auto px-8 py-8">
-      <button
-        onClick={() => navigate(-1)}
-        className="mb-6 flex items-center text-gray-600 hover:text-orange-500 transition"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="w-5 h-5 mr-2"
+      <div className="h-auto max-w-6xl mx-auto px-8 py-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="mb-6 flex items-center text-gray-600 hover:text-orange-500 transition"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        กลับหน้าหมวดหมู่
-      </button>
-      <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-        เมนู{categoryName}
-      </h1>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className="w-5 h-5 mr-2"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          กลับหน้าหมวดหมู่
+        </button>
 
-      {menus.length === 0 ? (
-        <p className="text-center text-gray-500">ไม่มีเมนูในหมวดนี้</p>
-      ) : (
-        <div className="space-y-4">
-          {menus.map((item, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-lg shadow-sm p-4 flex w-svw justify-between items-center hover:shadow-md transition"
-            >
-              <div>
-                <h3 className="font-semibold text-gray-700">{item.name}</h3>
-                <p className="text-sm text-gray-500">{item.price} บาท</p>
-              </div>
-              <button
-                onClick={() => showAddToCartToast(`เพิ่ม ${item.name} เข้าตะกร้าแล้ว!`)}
-                className="bg-orange-500 text-white rounded-lg px-4 py-2 hover:bg-orange-600"
+        <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
+          เมนู{categoryName}
+        </h1>
+
+        {menus.length === 0 ? (
+          <p className="text-center text-gray-500">ไม่มีเมนูในหมวดนี้</p>
+        ) : (
+          <div className="space-y-4">
+            {menus.map((item, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-lg shadow-sm p-4 flex justify-between items-center hover:shadow-md transition"
               >
-                เพิ่ม
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+                <div>
+                  <h3 className="font-semibold text-gray-700">{item.name}</h3>
+                  <p className="text-sm text-gray-500">{item.price} บาท</p>
+                </div>
+                <button
+                  onClick={() => {
+                    addToCart(item);
+                    showAddToCartToast(`เพิ่ม ${item.name} เข้าตะกร้าแล้ว!`);
+                  }}
+                  className="bg-orange-500 text-white rounded-lg px-4 py-2 hover:bg-orange-600"
+                >
+                  เพิ่ม
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 🔸 ปุ่มลอย */}
+      <FloatingCartButton
+        count={totalCount}
+        onClick={() => setSidebarOpen(true)}
+      />
+
+      {/* 🔸 Sidebar */}
+      <CartSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        items={cart.map((i) => ({
+          name: i.name,
+          price: i.price,
+          qty: i.quantity,
+        }))}
+      />
     </PageWrapper>
   );
 }
